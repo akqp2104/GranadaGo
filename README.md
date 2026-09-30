@@ -1,35 +1,62 @@
-# Tripwise
-Planificación de itinerarios familiares para una agencia de viajes
+# GranadaGo
+Comparación de transporte público en el área metropolitana de Granada
 
 ## Procedencia del problema
 
-La idea nació al intentar organizar unas vacaciones familiares. Elegir qué visitar parecía sencillo hasta que hubo que encajar horarios, duración de las visitas, desplazamientos y presupuesto. En una agencia que prepara viajes a medida, este trabajo se repite para cada cliente y, además, la propuesta suele cambiar mientras se prepara.
+Vivo en Maracena y me desplazo con frecuencia dentro de la zona metropolitana de Granada para ir a la universidad, quedar con amigos o cuando tenía que ir a trabajar presencialmente. Aunque tengo carné y puedo utilizar el coche, el tráfico que encuentro varía bastante entre días y épocas del año. Esta incertidumbre me lleva a considerar el transporte público, pero tampoco siempre tengo claro qué alternativa encaja mejor con mis planes.
 
-Para plantear el proyecto me sitúo en una agencia de viajes local que trabaja con familias. El caso de la agencia sirve para definir quién utilizaría la aplicación; no presupone que haya entrevistado a una empresa concreta ni que conozca su sistema informático actual.
+El metro puede resultar conveniente por su frecuencia, mientras que un autobús puede dejarme más cerca del destino. Sin embargo, además del tiempo de desplazamiento también influyen la espera, los posibles transbordos y las opciones disponibles para regresar.
 
-## Descripción del problema
+Las diferencias entre días laborables, fines de semana, festivos y temporadas complican estas comprobaciones. Un horario que sirve un día puede no estar disponible en otro. Asimismo, retrasar unos minutos la salida puede suponer tener que esperar al próximo servicio disponible y aumentar considerablemente el tiempo de espera.
 
-Una familia pide una propuesta para varios días e indica las fechas, las edades de los viajeros, lo que le interesa visitar y cuánto puede gastar. El agente selecciona actividades y las distribuye por jornadas. Después, la familia puede pedir un cambio: sustituir una visita, dejar una tarde libre o reducir el coste.
+El coste también influye en mi decisión. Las tarifas dependen del medio de transporte, del título utilizado y, cuando corresponde, de las zonas y condiciones de transbordo. Por ello, comparar únicamente el precio de un primer trayecto puede no reflejar el importe del desplazamiento completo.
 
-Cada cambio obliga a revisar el resto de la propuesta. Una actividad puede coincidir con otra, quedar demasiado lejos para llegar a tiempo, no admitir a un menor o hacer que se sobrepase el presupuesto. También puede que el agente haya utilizado una duración o un precio que se haya modificado posteriormente en el catálogo de la agencia. Si estas comprobaciones se hacen una a una, preparar una nueva versión lleva tiempo y es fácil pasar por alto alguna incompatibilidad.
+Consultar todo esto manualmente conlleva mucho tiempo, además del riesgo de pasar por alto alguna incompatibilidad.
 
-El problema que quiero resolver es, por tanto, cómo preparar y modificar una propuesta de viaje familiar manteniendo visibles sus restricciones de tiempo, adecuación y coste. No se trata de decidir por la familia cuál es el mejor viaje, sino de ayudar al agente a comprobar que la propuesta que le presenta tiene sentido con los datos que conoce.
+El proyecto parte de esta experiencia y se centra en los desplazamientos en transporte público entre Maracena, Albolote o Armilla y destinos concretos de Granada capital.
 
-## Objetivo
+## Delimitación del problema
 
-Desarrollar una aplicación compartida por los agentes de la agencia. Cada solicitud recogerá los datos de la familia y podrá dar lugar a una o varias versiones del itinerario. Al añadir o mover una actividad, la aplicación calculará el coste estimado y señalará los conflictos de horario, los desplazamientos que no caben entre dos visitas y las restricciones de edad que se incumplan.
+El ámbito inicial comprende desplazamientos entre paradas seleccionadas de Maracena, Albolote y Armilla y paradas de Granada capital, utilizando metro y autobuses metropolitanos o urbanos.
 
-Por ejemplo, si una visita termina a las 13:00 y la siguiente comienza a las 13:15, pero el desplazamiento registrado entre ambas zonas requiere 30 minutos, el agente recibirá un aviso antes de enviar la propuesta. Si cambia una actividad de pago, verá también cómo queda el presupuesto familiar.
+La comparación se basa en los horarios programados. Estos permiten estudiar las alternativas previstas, pero no garantizan la puntualidad ni anticipan incidencias.
 
-El agente podrá ajustar el itinerario y decidir qué versión entregar. Mantener las solicitudes, el catálogo y las propuestas en una misma aplicación permitirá que otro agente continúe el trabajo cuando sea necesario.
+Los recorridos a pie desde el origen o hasta el destino final solo se tendrán en cuenta cuando se disponga de duraciones conocidas y documentadas. En los demás casos, la comparación se realizará entre paradas.
 
-## Fuente de datos
+La duración del viaje en coche y la disponibilidad de aparcamiento quedan fuera del ámbito inicial, ya que todavía no se dispone de datos suficientes para compararlas de forma fundamentada.
 
-He consultado la [sección de turismo de datos.gob.es](https://datos.gob.es/es/sectores/turismo) y he elegido como posible punto de partida el conjunto [«Puntos de interés turístico de la ciudad de Madrid. Qué visitar en Madrid»](https://datos.gob.es/es/catalogo/l01280796-puntos-de-interes-turistico-de-la-ciudad-de-madrid-que-visitar-en-madrid-www-esmadrid-com1), publicado por el Ayuntamiento de Madrid. Incluye museos, monumentos y otros lugares visitables, con datos como la dirección, la ubicación y una descripción. En algunos casos aparecen también horarios y costes de acceso. El [archivo en español](https://www.esmadrid.com/opendata/turismo_v1_es.xml) se ofrece en formato XML.
+## Fuentes de datos
 
+### Autobuses metropolitanos
 
-Las [condiciones de reutilización de Madrid Destino](https://datos.madrid.es/pages/condiciones-reutilizacion-informacion-madrid-destino) permiten utilizar los datos y textos para fines comerciales y no comerciales, pero establecen límites diferentes para las fotografías. Por eso, el catálogo inicial utilizará la información textual y de ubicación, sin importar imágenes. Los horarios o costes que aparezcan en la fuente deberán revisarse antes de preparar una propuesta; la disponibilidad de plazas, la duración estimada de cada visita y el precio que aplique la agencia se introducirán por separado.
+El [Portal de Datos Abiertos de la Red de Consorcios de Transporte de Andalucía](https://api.ctan.es/) ofrece una [descarga del conjunto GTFS](https://api.ctan.es/v1/datos/UNIFICADO/gtfs.zip).
 
-## Imágenes relacionadas con las fichas del problema y la configuración de git
-![Ficha de cliente](/media/cliente.jpg)
-![Configuración del repositorio](/config/configuracion.md)
+El archivo contiene información sobre líneas, paradas, expediciones, horas de llegada y salida y calendarios de servicio. Se ha comprobado que incluye líneas del área de Granada que dan servicio a Maracena, Albolote y Armilla.
+
+Las [condiciones de reutilización](https://api.ctan.es/avisolegal.html) permiten utilizar la información para fines comerciales y no comerciales, respetando sus condiciones y citando la fuente.
+
+### Autobuses urbanos de Granada
+
+La [página municipal del planificador de transporte público](http://www.movilidadgranada.com/bus_planificador.php) ofrece un [archivo GTFS descargable](http://www.movilidadgranada.com/gtfs/gtfs.zip).
+
+Se ha comprobado que contiene líneas, paradas, expediciones, tiempos programados y calendarios. Se utilizarán estos archivos como fuente de datos, sin delegar los cálculos en el planificador externo de la página.
+
+### Metro de Granada
+
+El Metropolitano publica sus [horarios y frecuencias](https://metropolitanogranada.es/index.php/horarios).
+
+También se ha inspeccionado una [copia del conjunto GTFS del Metro de Granada](https://files.mobilitydatabase.org/mdb-2784/mdb-2784-202607180029/mdb-2784-202607180029.zip), conservada por MobilityDatabase y procedente del Punto de Acceso Nacional de Transporte. Incluye tiempos por parada y calendarios, con servicios cuya vigencia alcanza diciembre de 2026.
+
+Antes de incorporar este conjunto al repositorio se comprobarán las condiciones de reutilización aplicables y se documentarán su procedencia, fecha de obtención y periodo de vigencia.
+
+### Tarifas
+
+El Consorcio publica la [matriz de saltos y zonas](https://siu.ctagr.es/es/tarifas_saltos.php) y las [tarifas y condiciones de transbordo](https://siu.ctagr.es/es/tarifa.php).
+
+Estas referencias permiten identificar las reglas económicas del desplazamiento. Se conservará la fecha de vigencia de las tarifas utilizadas. Su incorporación no dependerá de consultas automáticas ni de scraping de estas páginas.
+
+### Tratamiento de las fuentes
+
+El procesamiento se realizará sobre archivos previamente descargados. La extracción de los campos necesarios y su interpretación se desarrollarán con código propio, sin bibliotecas externas que resuelvan la extracción ni servicios externos que calculen las alternativas.
+
+Se documentarán la procedencia y vigencia de cada conjunto para evitar mezclar horarios o tarifas correspondientes a periodos incompatibles.
