@@ -3,7 +3,7 @@ Comparación de transporte público en el área metropolitana de Granada
 
 ## Procedencia del problema
 
-Vivo en Maracena y me desplazo con frecuencia dentro de la zona metropolitana de Granada para ir a la universidad, quedar con amigos o cuando tenía que ir a trabajar presencialmente. Aunque tengo carné y puedo utilizar el coche, el tráfico que encuentro varía bastante entre días y épocas del año. Esta incertidumbre me lleva a considerar el transporte público, pero tampoco siempre tengo claro qué alternativa encaja mejor con mis planes.
+Vivo en Maracena y me desplazo con frecuencia dentro de la zona metropolitana de Granada para ir a la universidad, quedar con amigos o cuando tenía que ir a trabajar presencialmente. Aunque tengo carné y puedo utilizar el coche, prefiero utilizar el transporte público ya que encontrar aparcamiento en el centro es bastante complicado y dejarlo en el parking me sale muy caro. Sin embargo, tampoco siempre tengo claro qué transporte público encaja mejor con mis planes.
 
 El metro puede resultar conveniente por su frecuencia, mientras que un autobús puede dejarme más cerca del destino. Sin embargo, además del tiempo de desplazamiento también influyen la espera, los posibles transbordos y las opciones disponibles para regresar.
 
@@ -23,7 +23,7 @@ La comparación se basa en los horarios programados. Estos permiten estudiar las
 
 Los recorridos a pie desde el origen o hasta el destino final solo se tendrán en cuenta cuando se disponga de duraciones conocidas y documentadas. En los demás casos, la comparación se realizará entre paradas.
 
-La duración del viaje en coche y la disponibilidad de aparcamiento quedan fuera del ámbito inicial, ya que todavía no se dispone de datos suficientes para compararlas de forma fundamentada.
+La duración del viaje en coche y la disponibilidad de aparcamiento quedan fuera del ámbito inicial, ya que no se dispone de datos suficientes para compararlas de forma fundamentada.
 
 ## Fuentes de datos
 
@@ -60,3 +60,7 @@ Estas referencias permiten identificar las reglas económicas del desplazamiento
 El procesamiento se realizará sobre archivos previamente descargados. La extracción de los campos necesarios y su interpretación se desarrollarán con código propio, sin bibliotecas externas que resuelvan la extracción ni servicios externos que calculen las alternativas.
 
 Se documentarán la procedencia y vigencia de cada conjunto para evitar mezclar horarios o tarifas correspondientes a periodos incompatibles.
+
+## Imágenes relacionadas con las fichas del problema y la configuración de git
+![Ficha de cliente](/media/cliente.jpg)
+![Configuración del repositorio](/config/configuracion.md)
