@@ -1,66 +1,69 @@
-# GranadaGo
-Comparación de transporte público en el área metropolitana de Granada
+# RoyaleDeck
 
-## Procedencia del problema
+## Descripción del problema
 
-Vivo en Maracena y me desplazo con frecuencia dentro de la zona metropolitana de Granada para ir a la universidad, quedar con amigos o cuando tenía que ir a trabajar presencialmente. Aunque tengo carné y puedo utilizar el coche, prefiero utilizar el transporte público ya que encontrar aparcamiento en el centro es bastante complicado y dejarlo en el parking me sale muy caro. Sin embargo, tampoco siempre tengo claro qué transporte público encaja mejor con mis planes.
+Modificar un mazo de Clash Royale exige considerar cómo afecta cada cambio al conjunto. Una sustitución puede cubrir una carencia y, al mismo tiempo, aumentar demasiado el coste de elixir o eliminar una capacidad que se quería conservar.
 
-El metro puede resultar conveniente por su frecuencia, mientras que un autobús puede dejarme más cerca del destino. Sin embargo, además del tiempo de desplazamiento también influyen la espera, los posibles transbordos y las opciones disponibles para regresar.
+El problema consiste en determinar qué cambios permiten cubrir las necesidades del jugador utilizando las cartas disponibles, respetando las que desea mantener y su límite de coste medio de elixir. Se busca alterar lo menos posible el mazo original e identificar qué condiciones habría que reconsiderar cuando no puedan cumplirse todas.
 
-Las diferencias entre días laborables, fines de semana, festivos y temporadas complican estas comprobaciones. Un horario que sirve un día puede no estar disponible en otro. Asimismo, retrasar unos minutos la salida puede suponer tener que esperar al próximo servicio disponible y aumentar considerablemente el tiempo de espera.
+Este problema parte de mi experiencia como jugadora. La ficha del cliente recoge el contexto y las dificultades que motivan el proyecto.
 
-El coste también influye en mi decisión. Las tarifas dependen del medio de transporte, del título utilizado y, cuando corresponde, de las zonas y condiciones de transbordo. Por ello, comparar únicamente el precio de un primer trayecto puede no reflejar el importe del desplazamiento completo.
+## Alcance
 
-Consultar todo esto manualmente conlleva mucho tiempo, además del riesgo de pasar por alto alguna incompatibilidad.
+Las necesidades consideradas deberán expresarse mediante características comprobables de las cartas: coste de elixir, tipo y objetivos a los que pueden atacar.
 
-El proyecto parte de esta experiencia y se centra en los desplazamientos en transporte público entre Maracena, Albolote o Armilla y destinos concretos de Granada capital.
+La cobertura de un objetivo significa que el mazo contiene cartas capaces de atacarlo, pero no garantiza que puedan derrotar cualquier amenaza de ese tipo. El proyecto tampoco pretende predecir victorias ni identificar un mazo universalmente superior.
 
-## Delimitación del problema
+Los niveles de las cartas no se utilizarán para estimar resultados de combate. El jugador podrá indicar qué cartas quiere conservar por tenerlas mejoradas y cuáles acepta considerar como sustitutas.
 
-El ámbito inicial comprende desplazamientos entre paradas seleccionadas de Maracena, Albolote y Armilla y paradas de Granada capital, utilizando metro y autobuses metropolitanos o urbanos.
+El alcance inicial se limitará a las cartas cuyos atributos necesarios estén verificados en la versión del catálogo utilizada. No se asumirá que ese catálogo refleja todas las modificaciones posteriores del juego.
 
-La comparación se basa en los horarios programados. Estos permiten estudiar las alternativas previstas, pero no garantizan la puntualidad ni anticipan incidencias.
+## Procedencia de los datos
 
-Los recorridos a pie desde el origen o hasta el destino final solo se tendrán en cuenta cuando se disponga de duraciones conocidas y documentadas. En los demás casos, la comparación se realizará entre paradas.
+### Catálogo de cartas
 
-La duración del viaje en coche y la disponibilidad de aparcamiento quedan fuera del ámbito inicial, ya que no se dispone de datos suficientes para compararlas de forma fundamentada.
+Se utilizará el conjunto [Clash Royale Cards Data, de Nitesh Kakkar](https://www.kaggle.com/datasets/niteshkakkar/clash-royal-cards-data). La versión consultada fue actualizada el 30 de octubre de 2025 y contiene los archivos `clash_royale_cards_1.json` y `clash_royale_cards.xlsx`.
 
-## Fuentes de datos
+El JSON incluye 120 registros dentro de una lista denominada `items`. Los campos relevantes son:
 
-### Autobuses metropolitanos
+| Campo | Información |
+|---|---|
+| `id` | Identificador de la carta |
+| `name` | Nombre |
+| `elixirCost` | Coste de elixir |
+| `type` | Tipo de carta |
+| `targets` | Objetivos a los que puede atacar |
 
-El [Portal de Datos Abiertos de la Red de Consorcios de Transporte de Andalucía](https://api.ctan.es/) ofrece una [descarga del conjunto GTFS](https://api.ctan.es/v1/datos/UNIFICADO/gtfs.zip).
+Por ejemplo, el registro de Knight contiene el identificador `26000000`, un coste de elixir de `3`, el tipo `troop` y el objetivo `ground`.
 
-El archivo contiene información sobre líneas, paradas, expediciones, horas de llegada y salida y calendarios de servicio. Se ha comprobado que incluye líneas del área de Granada que dan servicio a Maracena, Albolote y Armilla.
+Los atributos ausentes o ambiguos no se completarán con valores inventados. Los registros que no permitan comprobar las condiciones del problema quedarán fuera del alcance hasta que puedan verificarse.
 
-Las [condiciones de reutilización](https://api.ctan.es/avisolegal.html) permiten utilizar la información para fines comerciales y no comerciales, respetando sus condiciones y citando la fuente.
+El conjunto declara licencia CC BY-NC-SA 4.0. Se conservarán la atribución al autor, la referencia a la licencia y la indicación de las modificaciones realizadas, respetando sus condiciones de uso no comercial y de distribución de adaptaciones. No se incorporarán las imágenes enlazadas desde el catálogo.
 
-### Autobuses urbanos de Granada
+La copia utilizada se incluirá en el repositorio junto con su procedencia y versión.
 
-La [página municipal del planificador de transporte público](http://www.movilidadgranada.com/bus_planificador.php) ofrece un [archivo GTFS descargable](http://www.movilidadgranada.com/gtfs/gtfs.zip).
+### Información aportada por el jugador
 
-Se ha comprobado que contiene líneas, paradas, expediciones, tiempos programados y calendarios. Se utilizarán estos archivos como fuente de datos, sin delegar los cálculos en el planificador externo de la página.
+Para describir su caso, el jugador indicará:
 
-### Metro de Granada
+- Las ocho cartas de su mazo actual.
+- Las cartas que quiere conservar.
+- Las cartas disponibles que acepta considerar como sustitutas.
+- Las condiciones que necesita cumplir, como el límite de coste medio de elixir y la cobertura de objetivos.
 
-El Metropolitano publica sus [horarios y frecuencias](https://metropolitanogranada.es/index.php/horarios).
+No será necesario introducir estadísticas, historiales de partidas ni toda la colección. Las alternativas se limitarán a las cartas indicadas por el jugador.
 
-También se ha inspeccionado una [copia del conjunto GTFS del Metro de Granada](https://files.mobilitydatabase.org/mdb-2784/mdb-2784-202607180029/mdb-2784-202607180029.zip), conservada por MobilityDatabase y procedente del Punto de Acceso Nacional de Transporte. Incluye tiempos por parada y calendarios, con servicios cuya vigencia alcanza diciembre de 2026.
+Los datos de referencia necesarios estarán dentro del repositorio. El funcionamiento no dependerá de consultas a APIs ni de bases de datos externas.
 
-Antes de incorporar este conjunto al repositorio se comprobarán las condiciones de reutilización aplicables y se documentarán su procedencia, fecha de obtención y periodo de vigencia.
+## Justificación del despliegue en la nube
 
-### Tarifas
+El problema afecta a jugadores con diferentes colecciones y restricciones, pero que utilizan un mismo catálogo de referencia.
 
-El Consorcio publica la [matriz de saltos y zonas](https://siu.ctagr.es/es/tarifas_saltos.php) y las [tarifas y condiciones de transbordo](https://siu.ctagr.es/es/tarifa.php).
+El despliegue en la nube resulta adecuado para ofrecer el análisis de combinaciones desde sus dispositivos, manteniendo una versión común de los datos y evitando que cada jugador tenga que instalar y mantener un entorno de ejecución.
 
-Estas referencias permiten identificar las reglas económicas del desplazamiento. Se conservará la fecha de vigencia de las tarifas utilizadas. Su incorporación no dependerá de consultas automáticas ni de scraping de estas páginas.
-
-### Tratamiento de las fuentes
-
-El procesamiento se realizará sobre archivos previamente descargados. La extracción de los campos necesarios y su interpretación se desarrollarán con código propio, sin bibliotecas externas que resuelvan la extracción ni servicios externos que calculen las alternativas.
-
-Se documentarán la procedencia y vigencia de cada conjunto para evitar mezclar horarios o tarifas correspondientes a periodos incompatibles.
+La dificultad requiere valorar conjuntamente las restricciones y los efectos de varias sustituciones. Por ello, el servicio previsto tendría una responsabilidad de procesamiento que va más allá de almacenar y consultar cartas.
 
 ## Imágenes relacionadas con las fichas del problema y la configuración de git
-![Ficha de cliente](/media/cliente.jpg)
-![Configuración del repositorio](/config/configuracion.md)
+
+- [Fotografía de la ficha del cliente](media/cliente.jpg).
+- [Configuración del repositorio](config/configuracion.md).
